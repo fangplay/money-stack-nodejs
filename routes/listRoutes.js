@@ -7,13 +7,19 @@ const db = low(adapter);
 
 module.exports = (app) => {
 
-  app.get(`/`, async (req, res) => {
+  app.get(`/api/`, async (req, res) => {
     res.json({ message: "Add Record Page"});
     const lists = db.get('list').value();
     return res.status(200).send(lists);
   });
 
-  app.post(`/record`, async (req, res) => {
+  app.get(`/api/add-record`, async (req, res) => {
+    res.json({ message: "Add Record Page"});
+    // const lists = db.get('list').value();
+    return res.status(200);
+  });
+
+  app.post(`/api/record`, async (req, res) => {
     res.json({ message: "Recording" });
     const { name, lastName } = req.body;
     const id = shortid.generate();
@@ -26,13 +32,13 @@ module.exports = (app) => {
       .find({ id })
       .value();
 
-    return res.status(201).send({
+    return res.status(200).send({
       error: false,
       list
     });
   });
 
-  app.get(`/records?date=:datetime`, async (req, res) => {
+  app.get(`/api/records?date=:datetime`, async (req, res) => {
     res.json({ message: "Add Record Page"});
     
     return res.status(200).send(lists);
