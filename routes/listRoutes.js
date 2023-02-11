@@ -1,11 +1,11 @@
-const low = require('lowdb');
-const FileSync = require('lowdb/adapters/FileSync');
-const shortid = require('shortid');
+const low = import('lowdb');
+const FileSync = import('lowdb/adapters/FileSync');
+const shortid = import('shortid');
 
 const adapter = new FileSync('db.json');
 const db = low(adapter);
 
-module.exports = (app) => {
+exports = (app) => {
 
   app.get(`/api/`, async (req, res) => {
     res.json({ message: "Add Record Page"});
@@ -21,16 +21,29 @@ module.exports = (app) => {
 
   app.post(`/api/record`, async (req, res) => {
     res.json({ message: "Recording" });
-    const { name, lastName } = req.body;
-    const id = shortid.generate();
-    const lists = db
-      .get('lists')
-      .push({ id , title , description , category , price , datetime })
-      .write();
+    // const {  title , description , category , price , datetime } = req.body;
+    const data = {
+      id:shortid.generate(),
+      title:req.body.title,
+      description:req.body.description,
+      category:req.body.category,
+      price:req.body.price,
+      datetime:req.body.datetime
+    }
+    // const id = shortid.generate();
+    // const lists = db
+    //   .get('lists')
+    //   .push({ id , title , description , category , price , datetime })
+    //   .write();
 
-    const list = db.get('lists')
-      .find({ id })
-      .value();
+    // const list = db.get('lists')
+    //   .find({ id })
+    //   .value();
+
+    db.get('lists')
+      .push(data)
+      .last()
+      .write()
 
     return res.status(200).send({
       error: false,

@@ -3,7 +3,7 @@ import listService from './services/list.service';
 
 function Home(){
 
-  const [ lists, setLists ] = useState(null);
+  const [ lists, setLists ] = useState();
 
   const getLists = async () => {
     let res = await listService.getAll();
