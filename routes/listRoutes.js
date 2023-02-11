@@ -24,8 +24,8 @@ module.exports = (app) => {
     const { name, lastName } = req.body;
     const id = shortid.generate();
     const lists = db
-      .get('list')
-      .push({ id, name, lastName })
+      .get('lists')
+      .push({ id , title , description , category , price , datetime })
       .write();
 
     const list = db.get('lists')

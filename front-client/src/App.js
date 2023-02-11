@@ -5,18 +5,18 @@ import Home from "./home";
 import listService from './services/list.service';
 
 function App() {
-  const [ lists, setLists ] = useState(null);
+  // const [ lists, setLists ] = useState(null);
 
-  useEffect(() => {
-    if (!lists) {
-      getLists();
-    }
-  })
+  // useEffect(() => {
+  //   if (!lists) {
+  //     getLists();
+  //   }
+  // })
 
-  const getLists = async () => {
-    let res = await listService.getAll();
-    setLists(res);
-  }
+  // const getLists = async () => {
+  //   let res = await listService.getAll();
+  //   setLists(res);
+  // }
 
   // const renderList = list => {
   //   return (

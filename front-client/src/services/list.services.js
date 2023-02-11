@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-export default {
+export default function Service(title,description,category,price,datetime){
   getAll: async () => {
     let res = await axios.get(`/api`);
     return res.data || [];
