@@ -1,38 +1,73 @@
-import express from "express";
-import morgan from "morgan";
-import listRoutes from "../routes/listRoutes.js";
-import swaggerUI from "swagger-ui-express";
-import swaggerJsDoc from "swagger-jsdoc";
+// const low = import('lowdb');
+// const FileSync = import('./lowdb/adapters/FileSync');
+
+// // const adapter = new FileSync('db.json');
+// const adapter = new FileSync('./db.json');
+// const db = low(adapter);
+ 
+// // set defaults for the db
+// db.defaults({
+//     earnings: []
+// }).write();
+
+// app.post("/test", function(req, res) {
+//     // something to add to the db
+//     let today = {
+//         date: '2017-12-27',
+//         cash: 87.50,
+//         unit: 'USD'
+//     };
+    
+//     // push and write to the db
+//     // db.get('earnings').push(today).write();
+
+//     let addSources;
+//         addSources = db.get('earnings').push(today).write()
+
+//         if(addSources) {
+//             res.status(200).json({message: "Source added successfully"});
+//         } else {
+//             res.status(403).json({message: "Cannot add source"});
+//         }
+// });
+
+// Low DB Configurations
+// const low = require('lowdb');
+// const FileSync = require('lowdb/adapters/FileSync');
+
+// const adapter = new FileSync('db.json');
+// const db = low(adapter);
+
+
+// app.post("/beta", function(req, res) {
+//     let today = {
+//                 date: '2017-12-27',
+//                 cash: 87.50,
+//                 unit: 'USD'
+//             };
+//     let savedArticles = db.get('savedArticles')
+//         .push(today)
+//         .write()
+
+//     if(savedArticles) {
+//         res.status(200).json({message: "Saved successfully"});
+//     } else {
+//         res.status(403).json({message: "Cannot save data"});
+//     }
+// });
+
+const express = import("express");
+const low = import("lowdb");
 
 const app = express();
 
-// settings
-app.set("port", process.env.PORT || 3000);
+app.get("/", async (req, res) => {
+    res.json({ message: "Accountant App Page"});
+    // const lists = db.get('list').value();
+    return res.status(200);
+});
+ 
+const port = 8000;
 
-const options = {
-  definition: {
-    openapi: "3.0.0",
-    info: {
-      title: "Tasks API",
-      version: "1.0.0",
-      description: "A simple express library API",
-    },
-    servers: [
-      {
-        url: "http://localhost:3000",
-      },
-    ],
-  },
-  apis: ["./src/routes/*.js"],
-};
-const specs = swaggerJsDoc(options);
-
-// middlewares
-app.use(express.json());
-app.use(morgan("dev"));
-app.use("/api-docs", swaggerUI.serve, swaggerUI.setup(specs));
-
-// Routes
-app.use(listRoutes);
-
-export { app };
+//display linkserver
+app.listen(port,()=> console.log(`Server testing on http://127.0.0.1:${port}`));
