@@ -1,6 +1,6 @@
 {
   "name": "test-app",
-  "version": "1.0.0",
+  "version": "3.5.0",
   "description": "api backend & frontend projects",
   "exports": "./index.js",
   "scripts": {

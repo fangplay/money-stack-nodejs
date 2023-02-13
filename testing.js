@@ -37,7 +37,12 @@ require("fix-esm").register();
 // Low DB Configurations
 // import { low } from 'lowdb'
 // import { JSONFile } from 'lowdb/node'
-const router = express.Router();
+const express = require('express');
+const app = express();
+
+const cors = require('cors');
+app.use(cors());
+
 const low = require('lowdb');
 const jsonFileDb = require('json-file-db');
 const adapter = new jsonFileDb.FileSync('db.json');
@@ -48,7 +53,7 @@ const db = low(adapter);
 
 
 
-router.post("/beta", function(req, res) {
+app.post("/beta", function(req, res) {
     let today = {
                 date: '2017-12-27',
                 cash: 87.50,
