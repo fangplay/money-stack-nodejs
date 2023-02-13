@@ -1,5 +1,8 @@
+require("fix-esm").register();
+
 // const low = import('lowdb');
 // const FileSync = import('./lowdb/adapters/FileSync');
+
 
 // // const adapter = new FileSync('db.json');
 // const adapter = new FileSync('./db.json');
@@ -32,42 +35,50 @@
 // });
 
 // Low DB Configurations
-// const low = require('lowdb');
-// const FileSync = require('lowdb/adapters/FileSync');
-
+// import { low } from 'lowdb'
+// import { JSONFile } from 'lowdb/node'
+const router = express.Router();
+const low = require('lowdb');
+const jsonFileDb = require('json-file-db');
+const adapter = new jsonFileDb.FileSync('db.json');
+const db = low(adapter);
 // const adapter = new FileSync('db.json');
 // const db = low(adapter);
 
 
-// app.post("/beta", function(req, res) {
-//     let today = {
-//                 date: '2017-12-27',
-//                 cash: 87.50,
-//                 unit: 'USD'
-//             };
-//     let savedArticles = db.get('savedArticles')
-//         .push(today)
-//         .write()
 
-//     if(savedArticles) {
-//         res.status(200).json({message: "Saved successfully"});
-//     } else {
-//         res.status(403).json({message: "Cannot save data"});
-//     }
-// });
 
-const express = import("express");
-const low = import("lowdb");
+router.post("/beta", function(req, res) {
+    let today = {
+                date: '2017-12-27',
+                cash: 87.50,
+                unit: 'USD'
+            };
+    let savedBeta = db.get('savedBeta')
+        .push(today)
+        .write()
 
-const app = express();
-
-app.get("/", async (req, res) => {
-    res.json({ message: "Accountant App Page"});
-    // const lists = db.get('list').value();
-    return res.status(200);
+    if(savedBeta) {
+        res.status(200).json({message: "Saved successfully"});
+    } else {
+        res.status(403).json({message: "Cannot save data"});
+    }
 });
+
+
+
+// const express = request("express");
+// const low = request("lowdb");
+
+// const app = express();
+
+// app.get("/", async (req, res) => {
+//     res.json({ message: "Accountant App Page"});
+//     // const lists = db.get('list').value();
+//     return res.status(200);
+// });
  
 const port = 8000;
 
 //display linkserver
-app.listen(port,()=> console.log(`Server testing on http://127.0.0.1:${port}`));
+fs.listen(port,()=> console.log(`Server testing on http://127.0.0.1:${port}`));

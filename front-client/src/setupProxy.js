@@ -1,7 +1,7 @@
-const { createProxyMiddleware } = import('http-proxy-middleware')
+const { setupMiddlewares } = import('http-proxy-middleware')
 
 exports = function(app) {
-  app.use('/api/', createProxyMiddleware({
+  app.use('/api/', setupMiddlewares({
     target: 'http://localhost:8000',
     changeOrigin: true
   }));
