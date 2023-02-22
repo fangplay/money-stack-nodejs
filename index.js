@@ -16,21 +16,22 @@ const nanoid = require('nanoid');
 const adapter = new FileSync('db.json');
 const db = low(adapter);
 
-  app.get(`/api`, async (req, res) => {
+  app.get(`/`, async (req, res) => {
     res.json({ message: "Accountant App Page"});
     const lists = db.get('list').value();
     return res.status(200).send(lists);
   });
 
-  app.get(`/api/add-record`, async (req, res) => {
+  app.get(`/add-record`, async (req, res) => {
     res.json({ message: "Add Record Page"});
     return res.status(200);
   });
 
-  app.post(`/api/record`, async (req, res) => {
-    res.json({ message: "Recording" });
+  app.post(`/record`, async (req, res) => {
+    // res.json({ message: "Recording" });
     const data = {
-      id:nanoid.generate(),
+      //error found
+      id:nanoid.nanoid(),
       title:req.body.title,
       description:req.body.description,
       category:req.body.category,
@@ -42,15 +43,18 @@ const db = low(adapter);
       .last()
       .write()
 
-    return res.status(200).send({
-      error: false,
-      list
-    });
+    // return res.status(200).send({
+    //   error: false,
+    //   list
+    // });
+    return res.status(200).send(
+      db.get('lists').last().value()
+    );
   });
 
-  app.get(`/api/records?date=:datetime`, async (req, res) => {
-    res.json({ message: "Record Time Select Page"});
-    const lists = db.get('list').value();
+  app.get(`/records`, async (req, res) => {
+    // res.json({ message: "Record Time Select Page"});
+    const lists = db.get('lists').value();
     return res.status(200).send(lists);
   });
 
